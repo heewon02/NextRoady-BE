@@ -4,7 +4,6 @@ import com.yoajung.jobplanner.user.domain.UserInfoEntity;
 import com.yoajung.jobplanner.user.dto.UserInfoModifyDTO;
 import com.yoajung.jobplanner.user.dto.UserInfoResponseDTO;
 import com.yoajung.jobplanner.user.dto.UserInfoSignUpDTO;
-import com.yoajung.jobplanner.user.pass.UserInfoPass;
 
 public class UserInfoEntityMapper {
     public static UserInfoEntity toUserInfo(UserInfoResponseDTO userInfoResponseDTO){
@@ -92,22 +91,6 @@ public class UserInfoEntityMapper {
                 userInfoEntity.getPhoneNumber(),
                 userInfoEntity.getAddress(),
                 userInfoEntity.getNickName(),
-                userInfoEntity.getLoginSource()
-        );
-    }
-
-
-
-    public static UserInfoPass toUserInfoPass(UserInfoEntity userInfoEntity){
-        return new UserInfoPass(
-                userInfoEntity.getEmail(),
-                userInfoEntity.getUsername(),
-                userInfoEntity.getRole(),
-                userInfoEntity.getGender(),
-                userInfoEntity.getPhoneNumber(),
-                userInfoEntity.getAddress(),
-                userInfoEntity.getNickName(),
-                userInfoEntity.getImageUrl(),
                 userInfoEntity.getLoginSource()
         );
     }

@@ -10,14 +10,12 @@ import com.yoajung.jobplanner.user.domain.UserInfoEntity;
 import com.yoajung.jobplanner.user.dto.UserInfoSignUpDTO;
 import com.yoajung.jobplanner.user.dto.UserInfoResponseDTO;
 import com.yoajung.jobplanner.user.mapper.UserInfoEntityMapper;
-import com.yoajung.jobplanner.user.pass.UserInfoPass;
 import com.yoajung.jobplanner.user.service.UserInfoService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,22 +28,20 @@ public class UserInfoController {
     private final JwtService jwtService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<BaseResponseBody<Void>> signUp(@Valid @RequestBody UserInfoSignUpDTO userInfoSignUpRequestDTO){
+    public ResponseEntity<BaseResponseBody<Void>> signUp(
+            @Valid @RequestBody UserInfoSignUpDTO userInfoSignUpRequestDTO) {
         userInfoService.signUp(userInfoSignUpRequestDTO);
-        return ResponseEntity
-                .status(SuccessStatus.OK.getHttpStatus())
-                .body(SuccessStatus.OK.getBaseResponseBody());
+        return ResponseEntity.status(SuccessStatus.OK.getHttpStatus()).body(SuccessStatus.OK.getBaseResponseBody());
     }
 
     @GetMapping("/sign-in")
-    public ResponseEntity<BaseResponseBody<Void>> signIn(){
-        return ResponseEntity
-                .status(SuccessStatus.OK.getHttpStatus())
-                .body(SuccessStatus.OK.getBaseResponseBody());
+    public ResponseEntity<BaseResponseBody<Void>> signIn() {
+        return ResponseEntity.status(SuccessStatus.OK.getHttpStatus()).body(SuccessStatus.OK.getBaseResponseBody());
     }
 
     @GetMapping("/refresh")
-    public ResponseEntity<BaseResponseBody<?>> refresh(@RequestHeader(name = Constant.HEADER_REFRESH_TOKEN) String refreshToken, HttpServletResponse response){
+    public ResponseEntity<BaseResponseBody<?>> refresh(
+            @RequestHeader(name = Constant.HEADER_REFRESH_TOKEN) String refreshToken, HttpServletResponse response) {
         JwtToken jwtToken = jwtService.reGenerateTokenSet(refreshToken);
         response.setHeader(Constant.HEADER_ACCESS_TOKEN, jwtToken.getAccessToken());
         response.setHeader(Constant.HEADER_REFRESH_TOKEN, jwtToken.getRefreshToken());
@@ -53,31 +49,15 @@ public class UserInfoController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<BaseResponseBody<Void>> testForSecurity(){
-        return ResponseEntity
-                .status(SuccessStatus.OK.getHttpStatus())
-                .body(SuccessStatus.OK.getBaseResponseBody());
+    public ResponseEntity<BaseResponseBody<Void>> testForSecurity() {
+        return ResponseEntity.status(SuccessStatus.OK.getHttpStatus()).body(SuccessStatus.OK.getBaseResponseBody());
     }
 
     @GetMapping("/info")
-    public ResponseEntity<BaseResponseBody<UserInfoResponseDTO>> getUserInfo(@AuthenticationPrincipal AuthenticatedUserInfo authenticatedUserInfo){
+    public ResponseEntity<BaseResponseBody<UserInfoResponseDTO>> getUserInfo(
+            @AuthenticationPrincipal AuthenticatedUserInfo authenticatedUserInfo) {
         UserInfoEntity userInfoEntity = userInfoService.findUserInfoById(authenticatedUserInfo.id());
         return ResponseEntity.status(SuccessStatus.OK.getHttpStatus())
                 .body(SuccessStatus.OK.getBaseResponseBody(UserInfoEntityMapper.toUserInfoResponseDTO(userInfoEntity)));
-    }
-
-    @GetMapping("/pass-id")
-    public ResponseEntity<BaseResponseBody<Void>> passIdToService(HttpServletResponse response, Authentication authentication){
-        AuthenticatedUserInfo authenticatedUserInfo = (AuthenticatedUserInfo) authentication.getPrincipal();
-        response.setHeader(Constant.HEADER_USER_ID, String.valueOf(authenticatedUserInfo.id()));
-        return ResponseEntity.status(SuccessStatus.OK.getHttpStatus())
-                .body(SuccessStatus.OK.getBaseResponseBody());
-    }
-
-    @GetMapping("/pass-info/{id}")
-    public ResponseEntity<BaseResponseBody<UserInfoPass>> getUserInfoPass(@PathVariable Long id){
-        UserInfoPass userInfoPass = userInfoService.findUserInfoPass(id);
-        return ResponseEntity.status(SuccessStatus.OK.getHttpStatus())
-                .body(SuccessStatus.OK.getBaseResponseBody(userInfoPass));
     }
 }

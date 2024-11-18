@@ -8,7 +8,6 @@ import com.yoajung.jobplanner.user.dto.UserInfoModifyDTO;
 import com.yoajung.jobplanner.user.dto.UserInfoSignUpDTO;
 import com.yoajung.jobplanner.user.exception.UserAlreadyExistException;
 import com.yoajung.jobplanner.user.exception.UserNotFoundException;
-import com.yoajung.jobplanner.user.pass.UserInfoPass;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,30 +64,6 @@ class UserInfoServiceTest {
             userInfoService.signUp(userInfoEntity3);
         }).isInstanceOf(UserAlreadyExistException.class);
 
-    }
-
-    @Test
-    @DisplayName("id를 통한 UserInfoPass 객체 반환")
-    void findUserInfoPassTest(){
-        // Given
-        UserInfoEntity userInfoEntity = new UserInfoEntity("rlwjdd234@naver.com", "kim", "qwer1234!", Role.ADMIN,
-                Gender.MALE, "010-1234-5678", "incheon", "whatup", "http://localhost:2020",LoginSource.THIS);
-        UserInfoPass userInfoPass = new UserInfoPass(
-                userInfoEntity.getEmail(),
-                userInfoEntity.getUsername(),
-                userInfoEntity.getRole(),
-                userInfoEntity.getGender(),
-                userInfoEntity.getPhoneNumber(),
-                userInfoEntity.getAddress(),
-                userInfoEntity.getNickName(),
-                userInfoEntity.getImageUrl(),
-                userInfoEntity.getLoginSource()
-        );
-        // When
-        UserInfoEntity saveUserInfo = userInfoService.saveUserInfo(userInfoEntity);
-        UserInfoPass findUserInfoPass = userInfoService.findUserInfoPass(saveUserInfo.getId());
-        // Then
-        Assertions.assertThat(findUserInfoPass).isEqualTo(userInfoPass);
     }
 
     @Test
