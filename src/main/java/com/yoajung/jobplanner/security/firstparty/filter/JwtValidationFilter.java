@@ -22,6 +22,7 @@ public class JwtValidationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     private final String[] swagger = {"/v3/api-docs", "/swagger-ui", "/favicon.ico"};
+    private final String[] roadmap = {"/roadmap"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -46,6 +47,6 @@ public class JwtValidationFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
         return path.equals("/user/sign-up") || path.equals("/user/sign-in") || path.equals("/user/refresh")
-                || Arrays.stream(swagger).anyMatch(path::startsWith);
+                || Arrays.stream(swagger).anyMatch(path::startsWith) || Arrays.stream(roadmap).anyMatch(path::startsWith);
     }
 }
