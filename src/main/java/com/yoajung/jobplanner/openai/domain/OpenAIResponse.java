@@ -1,8 +1,6 @@
 package com.yoajung.jobplanner.openai.domain;
 
 import java.util.List;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 public record OpenAIResponse(String id, String object, long created, String model,
                              com.yoajung.jobplanner.openai.domain.OpenAIResponse.Usage usage, List<Choice> choices) {
