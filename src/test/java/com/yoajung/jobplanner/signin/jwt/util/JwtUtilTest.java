@@ -1,4 +1,4 @@
-package com.yoajung.jobplanner.jwt.util;
+package com.yoajung.jobplanner.signin.jwt.util;
 
 import com.yoajung.jobplanner.security.userdetails.AuthenticatedUserInfo;
 import com.yoajung.jobplanner.signin.jwt.util.JwtUtil;

@@ -42,9 +42,6 @@ public class UserInfoEntity extends BaseEntity {
     private String phoneNumber;
 
     @Setter
-    private String address;
-
-    @Setter
     private String nickName;
 
     @Setter
@@ -53,7 +50,9 @@ public class UserInfoEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private LoginSource loginSource;
 
-    public UserInfoEntity(Long id, LocalDateTime createTime, LocalDateTime modifiedTime, LocalDateTime deletedTime, State state, String email, String username, String password, Role role, Gender gender, String phoneNumber, String address, String nickName, String imageUrl, LoginSource loginSource) {
+    public UserInfoEntity(Long id, LocalDateTime createTime, LocalDateTime modifiedTime, LocalDateTime deletedTime,
+                          State state, String email, String username, String password, Role role, Gender gender,
+                          String phoneNumber, String nickName, String imageUrl, LoginSource loginSource) {
         super(id, createTime, modifiedTime, deletedTime, state);
         this.email = email;
         this.username = username;
@@ -61,7 +60,6 @@ public class UserInfoEntity extends BaseEntity {
         this.role = role;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
-        this.address = address;
         this.nickName = nickName;
         this.imageUrl = imageUrl;
         this.loginSource = loginSource;

@@ -19,11 +19,9 @@ public record UserInfoResponseDTO(
 
         String phoneNumber,
 
-        String address,
-
         String nickName,
 
         @NotNull
-        LoginSource loginSource){
+        LoginSource loginSource) {
 }
 

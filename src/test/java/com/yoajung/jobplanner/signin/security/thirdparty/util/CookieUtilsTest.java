@@ -1,5 +1,6 @@
-package com.yoajung.jobplanner.security.thirdparty.util;
+package com.yoajung.jobplanner.signin.security.thirdparty.util;
 
+import com.yoajung.jobplanner.security.thirdparty.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

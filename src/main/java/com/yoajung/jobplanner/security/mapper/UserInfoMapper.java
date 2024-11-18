@@ -34,7 +34,6 @@ public class UserInfoMapper {
                 Role.USER,
                 null,
                 null,
-                null,
                 oAuth2UserInfo.getNickname(),
                 oAuth2UserInfo.getProfileImageUrl(),
                 loginSource
@@ -43,7 +42,6 @@ public class UserInfoMapper {
 
     public static LoginSource getLoginSource(OAuth2UserInfo oAuth2UserInfo) {
         OAuth2Provider oAuth2Provider = oAuth2UserInfo.getProvider();
-        LoginSource loginSource;
         switch (oAuth2Provider){
             case GOOGLE -> {return LoginSource.GOOGLE;}
             case NAVER -> {return LoginSource.NAVER;}

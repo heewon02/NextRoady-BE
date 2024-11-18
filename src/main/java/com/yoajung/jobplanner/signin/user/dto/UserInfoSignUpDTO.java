@@ -15,7 +15,7 @@ public record UserInfoSignUpDTO(
         @NotBlank(message = "사용자 이름을 입력해야 합니다.")
         String username,
 
-        @Size(min=10, max=15)
+        @Size(min = 10, max = 15)
         @NotBlank(message = "비밀번호를 입력해야 합니다.")
         String password,
 
@@ -28,12 +28,10 @@ public record UserInfoSignUpDTO(
         @Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "전화번호는 010-XXXX-XXXX 형식이어야 합니다.")
         String phoneNumber,
 
-        @NotBlank(message = "주소지를 입력해야 합니다.")
-        String address,
-
         @NotBlank(message = "닉네임을 입력해야 합니다.")
         String nickName,
 
         @NotNull(message = "로그인 소스를 부여해야 합니다.")
         LoginSource loginSource
-) { }
+) {
+}

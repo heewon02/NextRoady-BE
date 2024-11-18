@@ -1,4 +1,4 @@
-package com.yoajung.jobplanner.user.controller;
+package com.yoajung.jobplanner.signin.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoajung.jobplanner.common.constant.Constant;
@@ -69,21 +69,11 @@ class UserInfoControllerTest {
     @BeforeEach
     public void setup() {
         // RequestDTO 생성
-        userInfoSignUpRequestDTO = new UserInfoSignUpDTO("rlwjddl234@naver.com",
-                "kim",
-                "qwer1234567!",
-                Role.ADMIN,
-                Gender.MALE,
-                "010-1234-5678",
-                "Incheon",
-                "whatup",
-                LoginSource.THIS);
+        userInfoSignUpRequestDTO = new UserInfoSignUpDTO("rlwjddl234@naver.com", "kim", "qwer1234567!", Role.ADMIN,
+                Gender.MALE, "010-1234-5678", "whatup", LoginSource.THIS);
 
         // security 적용
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
     }
 
 
@@ -93,13 +83,9 @@ class UserInfoControllerTest {
 
         String userJson = objectMapper.writeValueAsString(userInfoSignUpRequestDTO);
 
-        mockMvc.perform(post("/user/sign-up")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userJson)
-                .with(SecurityMockMvcRequestPostProcessors.csrf()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.isSucceeded").value("true"))
-                .andExpect(jsonPath("$.message").value("성공입니다."));
+        mockMvc.perform(post("/user/sign-up").contentType(MediaType.APPLICATION_JSON).content(userJson)
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())).andExpect(status().isOk())
+                .andExpect(jsonPath("$.isSucceeded").value("true")).andExpect(jsonPath("$.message").value("성공입니다."));
 
     }
 
@@ -109,10 +95,8 @@ class UserInfoControllerTest {
         UserInfoEntity signUp = userInfoService.signUp(userInfoSignUpRequestDTO);
         JwtToken jwtToken = jwtService.generateTokenSet(createAuthentication(signUp));
 
-        mockMvc.perform(get("/user/refresh")
-                        .header(Constant.HEADER_REFRESH_TOKEN, jwtToken.getRefreshToken()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.isSucceeded").value("true"))
+        mockMvc.perform(get("/user/refresh").header(Constant.HEADER_REFRESH_TOKEN, jwtToken.getRefreshToken()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.isSucceeded").value("true"))
                 .andExpect(jsonPath("$.message").value("성공입니다."))
                 .andExpect(header().exists(Constant.HEADER_ACCESS_TOKEN))
                 .andExpect(header().exists(Constant.HEADER_REFRESH_TOKEN));
@@ -124,12 +108,11 @@ class UserInfoControllerTest {
     void signInTest() throws Exception {
         userInfoService.signUp(userInfoSignUpRequestDTO);
         // 자격증명을 전달
-        String authorization = Base64.getEncoder().encodeToString((userInfoSignUpRequestDTO.email() + ":" + userInfoSignUpRequestDTO.password()).getBytes());
+        String authorization = Base64.getEncoder().encodeToString(
+                (userInfoSignUpRequestDTO.email() + ":" + userInfoSignUpRequestDTO.password()).getBytes());
         // access token, refresh token을 받아야함.
-        mockMvc.perform(get("/user/sign-in")
-                        .header(Constant.HEADER_AUTHORIZATION, "Basic " + authorization))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.isSucceeded").value("true"))
+        mockMvc.perform(get("/user/sign-in").header(Constant.HEADER_AUTHORIZATION, "Basic " + authorization))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.isSucceeded").value("true"))
                 .andExpect(jsonPath("$.message").value("성공입니다."))
                 .andExpect(header().exists(Constant.HEADER_ACCESS_TOKEN))
                 .andExpect(header().exists(Constant.HEADER_REFRESH_TOKEN));
@@ -141,10 +124,8 @@ class UserInfoControllerTest {
         UserInfoEntity signUp = userInfoService.signUp(userInfoSignUpRequestDTO);
         JwtToken jwtToken = jwtService.generateTokenSet(createAuthentication(signUp));
 
-        mockMvc.perform(get("/user/test")
-                        .header(Constant.HEADER_AUTHORIZATION, "Bearer " + jwtToken.getAccessToken()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.isSucceeded").value("true"))
+        mockMvc.perform(get("/user/test").header(Constant.HEADER_AUTHORIZATION, "Bearer " + jwtToken.getAccessToken()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.isSucceeded").value("true"))
                 .andExpect(jsonPath("$.message").value("성공입니다."));
 
     }
@@ -156,40 +137,24 @@ class UserInfoControllerTest {
         Authentication authentication = createAuthentication(signUp);
         JwtToken jwtToken = jwtService.generateTokenSet(authentication);
 
-        MvcResult mvcResult = mockMvc.perform(get("/user/info")
-                        .header(Constant.HEADER_AUTHORIZATION, "Bearer " + jwtToken.getAccessToken()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.isSucceeded").value("true"))
-                .andExpect(jsonPath("$.message").value("성공입니다."))
-                .andReturn();
+        MvcResult mvcResult = mockMvc.perform(
+                        get("/user/info").header(Constant.HEADER_AUTHORIZATION, "Bearer " + jwtToken.getAccessToken()))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.isSucceeded").value("true"))
+                .andExpect(jsonPath("$.message").value("성공입니다.")).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
         userInfoResponseDTO = UserInfoEntityMapper.toUserInfoResponseDTO(signUp);
-        String responseDtoToJson = objectMapper.writeValueAsString(SuccessStatus.OK.getBaseResponseBody(userInfoResponseDTO));
+        String responseDtoToJson = objectMapper.writeValueAsString(
+                SuccessStatus.OK.getBaseResponseBody(userInfoResponseDTO));
         Assertions.assertEquals(contentAsString, responseDtoToJson);
 
     }
 
-    @Test
-    @DisplayName("/user/pass-id 테스트: 엑세스 토큰을 통한 UserInfoPass 반환")
-    void passIdTest() throws Exception {
-        UserInfoEntity signUp = userInfoService.signUp(userInfoSignUpRequestDTO);
-        Authentication authentication = createAuthentication(signUp);
-        JwtToken jwtToken = jwtService.generateTokenSet(authentication);
-
-        mockMvc.perform(get("/user/pass-id")
-                        .header(Constant.HEADER_AUTHORIZATION, "Bearer " + jwtToken.getAccessToken()))
-                .andExpect(status().isOk())
-                .andExpect(header().string(Constant.HEADER_USER_ID, String.valueOf(signUp.getId())))
-                .andExpect(jsonPath("$.isSucceeded").value("true"))
-                .andExpect(jsonPath("$.message").value("성공입니다."));
-
-    }
-
-    private Authentication createAuthentication(UserInfoEntity userInfoEntity){
+    private Authentication createAuthentication(UserInfoEntity userInfoEntity) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
-        AuthenticatedUserInfo authenticatedUserInfo = new AuthenticatedUserInfo(userInfoEntity.getId(), userInfoEntity.getNickName(), authorities);
+        AuthenticatedUserInfo authenticatedUserInfo = new AuthenticatedUserInfo(userInfoEntity.getId(),
+                userInfoEntity.getNickName(), authorities);
         return new UsernamePasswordAuthenticationToken(authenticatedUserInfo, "", authorities);
     }
 }

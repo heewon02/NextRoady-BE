@@ -47,7 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/sign-up", "/user/refresh").permitAll()
                         .requestMatchers(swagger).permitAll()
                         .requestMatchers("/user/sign-in", "/user/test", "/user/info", "/user/pass-id"
-                        , "/user/pass-info/{id}", "/oauth/sign-up").authenticated())
+                        , "/user/pass-info/{id}", "/oauth/sign-up", "/roadmap/whole", "/roadmap/year", "/roadmap/outlook", "/roadmap/validate").authenticated())
                 .oauth2Login(configure ->
                         configure.authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
                                 .userInfoEndpoint(config -> config.userService(customOAuth2UserService))

@@ -1,4 +1,4 @@
-package com.yoajung.jobplanner.user.controller;
+package com.yoajung.jobplanner.signin.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yoajung.jobplanner.common.constant.Constant;
@@ -74,12 +74,11 @@ class OAuth2ControllerTest {
                 Role.USER,
                 Gender.MALE,
                 "010-1234-5678",
-                "Incheon",
                 "whatup",
                 LoginSource.GOOGLE);
 
         UserInfoEntity newUserInfoEntity = new UserInfoEntity("rlwjddl1596@google.com", "kim", "qwer1234567!", Role.USER,
-                null, null, null, null, "http://localhost:2020",LoginSource.GOOGLE);
+                null, null, null, "http://localhost:2020",LoginSource.GOOGLE);
 
         this.userInfoEntity = userInfoService.saveUserInfo(newUserInfoEntity);
 
