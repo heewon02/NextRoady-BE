@@ -13,13 +13,13 @@ import com.yoajung.jobplanner.roadmap.service.impl.JobValidationServiceImpl;
 import com.yoajung.jobplanner.roadmap.service.impl.OutlookServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/roadmap")
 public class RoadMapController {
