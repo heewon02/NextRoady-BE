@@ -1,2 +1,2 @@
-# auth-service
-Authorization service for Spring Boot Applicaiton
+# job-planner
+Roadmap generation service for Spring Boot Applicaiton
