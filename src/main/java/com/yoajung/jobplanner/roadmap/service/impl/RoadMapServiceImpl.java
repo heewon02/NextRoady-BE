@@ -26,8 +26,8 @@ public class RoadMapServiceImpl implements RoadMapService {
         OpenAIRequest wholeRoadMapRequest = createWholeRoadMapRequest(job);
         Mono<OpenAIResponse> openAIResponseMono = openAIRequestServiceImpl.sendRequest(wholeRoadMapRequest);
         return openAIResponseMono.map(response -> {
-            Choice choice = response.getChoices().getFirst();
-            return new WholeRoadMapResponseDTO(choice.getMessage().getContent());
+            Choice choice = response.choices().getFirst();
+            return new WholeRoadMapResponseDTO(choice.message().content());
         });
     }
 
@@ -44,8 +44,8 @@ public class RoadMapServiceImpl implements RoadMapService {
         OpenAIRequest yearlyRoadMap = createYearRoadMapRequest(job);
         Mono<OpenAIResponse> openAIResponseMono = openAIRequestServiceImpl.sendRequest(yearlyRoadMap);
         return openAIResponseMono.flatMap(response -> {
-            Choice choice = response.getChoices().getFirst();
-            String content = choice.getMessage().getContent();
+            Choice choice = response.choices().getFirst();
+            String content = choice.message().content();
             YearRoadMap yearRoadMap = YearRoadMapParser.parse(content);
             return requestLectureSuggestion(content, job).map(
                     lectureSuggestion -> new YearRoadMapResponseDTO(yearRoadMap, lectureSuggestion));
@@ -56,8 +56,8 @@ public class RoadMapServiceImpl implements RoadMapService {
         OpenAIRequest onlineLectureRequest = createLectureRequest(prevResponse, job);
         Mono<OpenAIResponse> openAIResponseMono = openAIRequestServiceImpl.sendRequest(onlineLectureRequest);
         return openAIResponseMono.map(response -> {
-            Choice choice = response.getChoices().getFirst();
-            String content = choice.getMessage().getContent();
+            Choice choice = response.choices().getFirst();
+            String content = choice.message().content();
             return OnlineLectureParser.parse(content);
         });
     }

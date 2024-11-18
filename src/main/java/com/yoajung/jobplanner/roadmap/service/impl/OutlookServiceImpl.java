@@ -17,8 +17,8 @@ public class OutlookServiceImpl {
     public Mono<OutlookResponseDTO> requestOutlookRequest(String job) {
         OpenAIRequest outlookRequest = createOutlookRequest(job);
         return openAIRequestService.sendRequest(outlookRequest).map(response -> {
-            Choice choice = response.getChoices().getFirst();
-            String content = choice.getMessage().getContent();
+            Choice choice = response.choices().getFirst();
+            String content = choice.message().content();
             return new OutlookResponseDTO(content);
         });
     }

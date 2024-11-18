@@ -19,8 +19,8 @@ public class JobValidationServiceImpl implements JobValidationService {
     public Mono<JobValidationResponseDTO> validateJob(String job) {
         OpenAIRequest validationRequest = createValidationRequest(job);
         return openAIRequestService.sendRequest(validationRequest).map(response -> {
-            Choice choice = response.getChoices().getFirst();
-            String content = choice.getMessage().getContent();
+            Choice choice = response.choices().getFirst();
+            String content = choice.message().content();
             Boolean isJobExisted = parseResponse(content);
             return new JobValidationResponseDTO(isJobExisted);
         });
