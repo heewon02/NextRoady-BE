@@ -1,6 +1,6 @@
 package com.yoajung.jobplanner.security.config;
 
-import com.yoajung.jobplanner.jwt.service.JwtService;
+import com.yoajung.jobplanner.signin.jwt.service.JwtService;
 import com.yoajung.jobplanner.security.firstparty.filter.JwtGenerationFilter;
 import com.yoajung.jobplanner.security.firstparty.filter.JwtValidationFilter;
 import com.yoajung.jobplanner.security.thirdparty.handler.OAuth2AuthenticationFailureHandler;

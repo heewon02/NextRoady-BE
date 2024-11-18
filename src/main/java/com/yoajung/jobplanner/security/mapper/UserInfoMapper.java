@@ -3,9 +3,9 @@ package com.yoajung.jobplanner.security.mapper;
 import com.yoajung.jobplanner.security.thirdparty.user.OAuth2Provider;
 import com.yoajung.jobplanner.security.thirdparty.user.OAuth2UserInfo;
 import com.yoajung.jobplanner.security.userdetails.AuthenticatedUserInfo;
-import com.yoajung.jobplanner.user.domain.UserInfoEntity;
-import com.yoajung.jobplanner.user.domain.enums.LoginSource;
-import com.yoajung.jobplanner.user.domain.enums.Role;
+import com.yoajung.jobplanner.signin.user.domain.UserInfoEntity;
+import com.yoajung.jobplanner.signin.user.domain.enums.LoginSource;
+import com.yoajung.jobplanner.signin.user.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

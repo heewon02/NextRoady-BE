@@ -1,6 +1,7 @@
 package com.yoajung.jobplanner.jwt.util;
 
 import com.yoajung.jobplanner.security.userdetails.AuthenticatedUserInfo;
+import com.yoajung.jobplanner.signin.jwt.util.JwtUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

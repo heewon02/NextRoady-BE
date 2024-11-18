@@ -1,8 +1,8 @@
 package com.yoajung.jobplanner.security.thirdparty.handler;
 
 import com.yoajung.jobplanner.common.constant.Constant;
-import com.yoajung.jobplanner.jwt.JwtToken;
-import com.yoajung.jobplanner.jwt.service.JwtService;
+import com.yoajung.jobplanner.signin.jwt.JwtToken;
+import com.yoajung.jobplanner.signin.jwt.service.JwtService;
 import com.yoajung.jobplanner.security.mapper.UserInfoMapper;
 import com.yoajung.jobplanner.security.thirdparty.requestrepository.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.yoajung.jobplanner.security.thirdparty.unlink.OAuth2UserUnlinkManager;
@@ -11,10 +11,10 @@ import com.yoajung.jobplanner.security.thirdparty.user.OAuth2UserInfo;
 import com.yoajung.jobplanner.security.thirdparty.user.OAuth2UserPrincipal;
 import com.yoajung.jobplanner.security.thirdparty.util.CookieUtils;
 import com.yoajung.jobplanner.security.userdetails.AuthenticatedUserInfo;
-import com.yoajung.jobplanner.user.domain.UserInfoEntity;
-import com.yoajung.jobplanner.user.domain.enums.Role;
-import com.yoajung.jobplanner.user.exception.UserNotFoundException;
-import com.yoajung.jobplanner.user.service.UserInfoService;
+import com.yoajung.jobplanner.signin.user.domain.UserInfoEntity;
+import com.yoajung.jobplanner.signin.user.domain.enums.Role;
+import com.yoajung.jobplanner.signin.user.exception.UserNotFoundException;
+import com.yoajung.jobplanner.signin.user.service.UserInfoService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -2,9 +2,9 @@ package com.yoajung.jobplanner.security.firstparty.provider;
 
 import com.yoajung.jobplanner.security.mapper.UserInfoMapper;
 import com.yoajung.jobplanner.security.userdetails.AuthenticatedUserInfo;
-import com.yoajung.jobplanner.user.domain.UserInfoEntity;
-import com.yoajung.jobplanner.user.domain.enums.LoginSource;
-import com.yoajung.jobplanner.user.service.UserInfoService;
+import com.yoajung.jobplanner.signin.user.domain.UserInfoEntity;
+import com.yoajung.jobplanner.signin.user.domain.enums.LoginSource;
+import com.yoajung.jobplanner.signin.user.service.UserInfoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;

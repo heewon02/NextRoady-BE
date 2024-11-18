@@ -4,8 +4,8 @@ import com.yoajung.jobplanner.security.mapper.UserInfoMapper;
 import com.yoajung.jobplanner.security.thirdparty.exception.OAuth2AuthenticationProcessingException;
 import com.yoajung.jobplanner.security.thirdparty.user.OAuth2Provider;
 import com.yoajung.jobplanner.security.thirdparty.user.OAuth2UserInfo;
-import com.yoajung.jobplanner.user.domain.UserInfoEntity;
-import com.yoajung.jobplanner.user.service.UserInfoService;
+import com.yoajung.jobplanner.signin.user.domain.UserInfoEntity;
+import com.yoajung.jobplanner.signin.user.service.UserInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

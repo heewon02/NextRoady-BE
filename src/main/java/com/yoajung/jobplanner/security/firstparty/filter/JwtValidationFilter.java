@@ -1,8 +1,8 @@
 package com.yoajung.jobplanner.security.firstparty.filter;
 
 import com.yoajung.jobplanner.common.constant.Constant;
-import com.yoajung.jobplanner.jwt.exception.TokenNotPresentException;
-import com.yoajung.jobplanner.jwt.service.JwtService;
+import com.yoajung.jobplanner.signin.jwt.exception.TokenNotPresentException;
+import com.yoajung.jobplanner.signin.jwt.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

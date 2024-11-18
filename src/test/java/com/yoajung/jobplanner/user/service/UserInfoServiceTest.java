@@ -1,13 +1,14 @@
 package com.yoajung.jobplanner.user.service;
 
-import com.yoajung.jobplanner.user.domain.UserInfoEntity;
-import com.yoajung.jobplanner.user.domain.enums.Gender;
-import com.yoajung.jobplanner.user.domain.enums.LoginSource;
-import com.yoajung.jobplanner.user.domain.enums.Role;
-import com.yoajung.jobplanner.user.dto.UserInfoModifyDTO;
-import com.yoajung.jobplanner.user.dto.UserInfoSignUpDTO;
-import com.yoajung.jobplanner.user.exception.UserAlreadyExistException;
-import com.yoajung.jobplanner.user.exception.UserNotFoundException;
+import com.yoajung.jobplanner.signin.user.domain.UserInfoEntity;
+import com.yoajung.jobplanner.signin.user.domain.enums.Gender;
+import com.yoajung.jobplanner.signin.user.domain.enums.LoginSource;
+import com.yoajung.jobplanner.signin.user.domain.enums.Role;
+import com.yoajung.jobplanner.signin.user.dto.UserInfoModifyDTO;
+import com.yoajung.jobplanner.signin.user.dto.UserInfoSignUpDTO;
+import com.yoajung.jobplanner.signin.user.exception.UserAlreadyExistException;
+import com.yoajung.jobplanner.signin.user.exception.UserNotFoundException;
+import com.yoajung.jobplanner.signin.user.service.UserInfoService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

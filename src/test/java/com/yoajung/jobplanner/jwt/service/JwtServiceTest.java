@@ -1,7 +1,8 @@
 package com.yoajung.jobplanner.jwt.service;
 
-import com.yoajung.jobplanner.jwt.JwtToken;
+import com.yoajung.jobplanner.signin.jwt.JwtToken;
 import com.yoajung.jobplanner.security.userdetails.AuthenticatedUserInfo;
+import com.yoajung.jobplanner.signin.jwt.service.JwtService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
