@@ -1,0 +1,89 @@
+digraph LinuxDeveloperRoadmap {
+    layout = neato; // Radial layout
+    overlap = false; // 노드 겹침 방지
+    splines = true; // 부드러운 연결선
+    node [shape=box, style=filled, fontsize=16];
+
+    // 중앙 노드
+    A [label="Linux Developer Roadmap", shape=ellipse, style=filled, fillcolor=lightblue, fontsize=20];
+
+    // 주요 카테고리 - 색상 추가
+    B [label="Programming Languages", fillcolor=green];
+    C [label="Databases", fillcolor=lightcoral];
+    D [label="Frameworks", fillcolor=lightgoldenrod];
+    E [label="Version Control", fillcolor=lightcyan];
+    F [label="Software Dev Tools", fillcolor=lightpink];
+    G [label="Network Programming", fillcolor=lightgray];
+    H [label="Deployment Tools", fillcolor=lightskyblue];
+
+    // 중앙에서 퍼지는 연결
+    A -> B;
+    A -> C;
+    A -> D;
+    A -> E;
+    A -> F;
+    A -> G;
+    A -> H;
+
+    // Programming Languages
+    B1 [label="C"];
+    B2 [label="C++"];
+    B3 [label="Python"];
+    B4 [label="Go"];
+    B -> B1;
+    B -> B2;
+    B -> B3;
+    B -> B4;
+
+    // Databases
+    C1 [label="Relational DB"];
+    C2 [label="NoSQL"];
+    C -> C1;
+    C -> C2;
+    C1a [label="PostgreSQL"];
+    C1b [label="MySQL"];
+    C1 -> C1a;
+    C1 -> C1b;
+    C2a [label="MongoDB"];
+    C2b [label="Cassandra"];
+    C2 -> C2a;
+    C2 -> C2b;
+
+    // Frameworks
+    D1 [label="Qt"];
+    D2 [label="GTK"];
+    D3 [label="Qt Creator"];
+    D -> D1;
+    D -> D2;
+    D -> D3;
+
+    // Version Control
+    E1 [label="Git"];
+    E2 [label="GitHub"];
+    E3 [label="GitLab"];
+    E -> E1;
+    E -> E2;
+    E -> E3;
+
+    // Software Development Tools
+    F1 [label="Make"];
+    F2 [label="CMake"];
+    F3 [label="Docker"];
+    F -> F1;
+    F -> F2;
+    F -> F3;
+
+    // Network Programming
+    G1 [label="Sockets"];
+    G2 [label="HTTP"];
+    G -> G1;
+    G -> G2;
+
+    // Deployment Tools
+    H1 [label="Ansible"];
+    H2 [label="Kubernetes"];
+    H3 [label="Docker Compose"];
+    H -> H1;
+    H -> H2;
+    H -> H3;
+}
