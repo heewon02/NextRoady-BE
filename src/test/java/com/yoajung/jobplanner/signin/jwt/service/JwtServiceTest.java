@@ -20,12 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class JwtServiceTest {
-    private static final Logger log = LoggerFactory.getLogger(JwtServiceTest.class);
+    
     @Autowired
     private JwtService jwtService;
 
     @Test
-    void 인증객체_반환(){
+    void 인증객체_반환() {
         // When
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
@@ -35,7 +35,7 @@ class JwtServiceTest {
         // Given
         JwtToken jwtToken = jwtService.generateTokenSet(authentication);
         Authentication jwtServiceAuthentication = jwtService.getAuthentication(jwtToken.getAccessToken());
-        AuthenticatedUserInfo principal = (AuthenticatedUserInfo)jwtServiceAuthentication.getPrincipal();
+        AuthenticatedUserInfo principal = (AuthenticatedUserInfo) jwtServiceAuthentication.getPrincipal();
 
         // Then
         Assertions.assertThat(principal.id()).isEqualTo(authenticatedUserInfo.id());
@@ -44,7 +44,7 @@ class JwtServiceTest {
     }
 
     @Test
-    void 토큰_재발급(){
+    void 토큰_재발급() {
         // When
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
@@ -56,10 +56,10 @@ class JwtServiceTest {
         JwtToken jwtToken2 = jwtService.reGenerateTokenSet(jwtToken1.getRefreshToken());
 
         Authentication jwtServiceAuthentication1 = jwtService.getAuthentication(jwtToken1.getAccessToken());
-        AuthenticatedUserInfo principal1 = (AuthenticatedUserInfo)jwtServiceAuthentication1.getPrincipal();
+        AuthenticatedUserInfo principal1 = (AuthenticatedUserInfo) jwtServiceAuthentication1.getPrincipal();
 
         Authentication jwtServiceAuthentication2 = jwtService.getAuthentication(jwtToken2.getAccessToken());
-        AuthenticatedUserInfo principal2 = (AuthenticatedUserInfo)jwtServiceAuthentication2.getPrincipal();
+        AuthenticatedUserInfo principal2 = (AuthenticatedUserInfo) jwtServiceAuthentication2.getPrincipal();
 
         // Then
         Assertions.assertThat(principal1.id()).isEqualTo(principal2.id());

@@ -28,7 +28,7 @@ public class SecurityConfig {
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final CorsConfigurationSource corsConfigurationSource;
 
-    private String[] swagger = {
+    private final String[] swagger = {
             "/v3/*",
             "/v3/api-docs/*",
             "/swagger-ui/*",

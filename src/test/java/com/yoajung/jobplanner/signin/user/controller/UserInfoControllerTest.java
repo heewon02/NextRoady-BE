@@ -64,8 +64,6 @@ class UserInfoControllerTest {
 
     private UserInfoSignUpDTO userInfoSignUpRequestDTO;
 
-    private UserInfoResponseDTO userInfoResponseDTO;
-
     @BeforeEach
     public void setup() {
         // RequestDTO 생성
@@ -143,7 +141,7 @@ class UserInfoControllerTest {
                 .andExpect(jsonPath("$.message").value("성공입니다.")).andReturn();
 
         String contentAsString = mvcResult.getResponse().getContentAsString(StandardCharsets.UTF_8);
-        userInfoResponseDTO = UserInfoEntityMapper.toUserInfoResponseDTO(signUp);
+        UserInfoResponseDTO userInfoResponseDTO = UserInfoEntityMapper.toUserInfoResponseDTO(signUp);
         String responseDtoToJson = objectMapper.writeValueAsString(
                 SuccessStatus.OK.getBaseResponseBody(userInfoResponseDTO));
         Assertions.assertEquals(contentAsString, responseDtoToJson);

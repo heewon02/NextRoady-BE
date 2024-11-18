@@ -69,34 +69,31 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             OAuth2UserInfo oAuth2UserInfo = principal.getUserInfo();
             if ("login".equalsIgnoreCase(mode)) {
 
-                log.info("oauth login succeeded with email={}, provider={}",
-                        oAuth2UserInfo.getEmail(),
-                        oAuth2UserInfo.getProvider()
-                );
+                log.info("oauth login succeeded with email={}, provider={}", oAuth2UserInfo.getEmail(),
+                        oAuth2UserInfo.getProvider());
 
                 UserInfoEntity userInfoEntity;
                 boolean isSignedUp;
-                try{
-                    userInfoEntity = userInfoService.findUserInfoByEmailAndLoginSource
-                            (oAuth2UserInfo.getEmail(), UserInfoMapper.getLoginSource(oAuth2UserInfo));
+                try {
+                    userInfoEntity = userInfoService.findUserInfoByEmailAndLoginSource(oAuth2UserInfo.getEmail(),
+                            UserInfoMapper.getLoginSource(oAuth2UserInfo));
                     isSignedUp = false;
-                }
-                catch (UserNotFoundException userNotFoundException){
+                } catch (UserNotFoundException userNotFoundException) {
                     UserInfoEntity convertedUserInfoEntity = UserInfoMapper.toUserInfoEntity(oAuth2UserInfo);
                     userInfoEntity = userInfoService.saveUserInfo(convertedUserInfoEntity);
                     isSignedUp = true;
                 }
 
                 // Authority 객체 생성 후 넘겨줘야 함.
-                Authentication usernamePasswordAuthenticationToken = getUsernamePasswordAuthenticationToken(userInfoEntity);
+                Authentication usernamePasswordAuthenticationToken = getUsernamePasswordAuthenticationToken(
+                        userInfoEntity);
 
                 JwtToken jwtToken = jwtService.generateTokenSet(usernamePasswordAuthenticationToken);
 
                 return UriComponentsBuilder.fromUriString(targetUrl)
                         .queryParam(Constant.HEADER_ACCESS_TOKEN, jwtToken.getAccessToken()) // Test
                         .queryParam(Constant.HEADER_REFRESH_TOKEN, jwtToken.getRefreshToken())
-                        .queryParam("sign-up", String.valueOf(isSignedUp))
-                        .build().toUriString();
+                        .queryParam("sign-up", String.valueOf(isSignedUp)).build().toUriString();
             } else if (mode.equalsIgnoreCase("unlink")) {
 
                 String accessToken = principal.getUserInfo().getAccessToken();
@@ -104,36 +101,29 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
                 oAuth2UserUnlinkManager.unlink(provider, accessToken, oAuth2UserInfo);
 
-                return UriComponentsBuilder.fromUriString(targetUrl)
-                        .build().toUriString();
+                return UriComponentsBuilder.fromUriString(targetUrl).build().toUriString();
             }
         }
-        return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("error", "Login failed")
-                .build().toUriString();
+        return UriComponentsBuilder.fromUriString(targetUrl).queryParam("error", "Login failed").build().toUriString();
     }
 
     private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(UserInfoEntity userInfoEntity) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(Role.USER.name()));
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(new AuthenticatedUserInfo(
-                        userInfoEntity.getId(),
-                        userInfoEntity.getEmail(),
-                        authorities), "", authorities);
-        return usernamePasswordAuthenticationToken;
+        return new UsernamePasswordAuthenticationToken(
+                new AuthenticatedUserInfo(userInfoEntity.getId(), userInfoEntity.getEmail(), authorities), "",
+                authorities);
     }
 
-    private String resolveMode(HttpServletRequest request){
+    private String resolveMode(HttpServletRequest request) {
         return CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.MODE_PARAM_COOKIE_NAME)
-                .map(Cookie::getValue)
-                .orElse("");
+                .map(Cookie::getValue).orElse("");
     }
 
 
-    private String resolveTargetURI(HttpServletRequest request){
-        Optional<String> redirectUri = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
-                .map(Cookie::getValue);
+    private String resolveTargetURI(HttpServletRequest request) {
+        Optional<String> redirectUri = CookieUtils.getCookie(request,
+                HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue);
 
         return redirectUri.orElse(getDefaultTargetUrl());
     }

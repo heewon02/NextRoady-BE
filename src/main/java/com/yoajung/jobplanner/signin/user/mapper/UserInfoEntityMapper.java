@@ -6,20 +6,6 @@ import com.yoajung.jobplanner.signin.user.dto.UserInfoResponseDTO;
 import com.yoajung.jobplanner.signin.user.dto.UserInfoSignUpDTO;
 
 public class UserInfoEntityMapper {
-    public static UserInfoEntity toUserInfo(UserInfoResponseDTO userInfoResponseDTO) {
-        return new UserInfoEntity(
-                userInfoResponseDTO.email(),
-                userInfoResponseDTO.username(),
-                null,
-                userInfoResponseDTO.role(),
-                userInfoResponseDTO.gender(),
-                userInfoResponseDTO.phoneNumber(),
-                userInfoResponseDTO.nickName(),
-                null,
-                userInfoResponseDTO.loginSource()
-        );
-    }
-
     public static UserInfoEntity toUserInfo(UserInfoSignUpDTO userInfoSignUpRequestDTO) {
         return new UserInfoEntity(
                 userInfoSignUpRequestDTO.email(),
@@ -75,18 +61,6 @@ public class UserInfoEntityMapper {
                 userInfoModifyDTO.nickName(),
                 null,
                 userInfoModifyDTO.loginSource()
-        );
-    }
-
-    public static UserInfoModifyDTO toUserInfoModifyDTO(UserInfoEntity userInfoEntity) {
-        return new UserInfoModifyDTO(
-                userInfoEntity.getEmail(),
-                userInfoEntity.getUsername(),
-                userInfoEntity.getRole(),
-                userInfoEntity.getGender(),
-                userInfoEntity.getPhoneNumber(),
-                userInfoEntity.getNickName(),
-                userInfoEntity.getLoginSource()
         );
     }
 }
