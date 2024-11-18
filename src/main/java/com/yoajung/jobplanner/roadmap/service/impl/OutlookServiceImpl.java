@@ -4,6 +4,7 @@ import com.yoajung.jobplanner.openai.domain.OpenAIRequest;
 import com.yoajung.jobplanner.openai.domain.OpenAIResponse.Choice;
 import com.yoajung.jobplanner.openai.service.OpenAIRequestService;
 import com.yoajung.jobplanner.roadmap.dto.response.OutlookResponseDTO;
+import com.yoajung.jobplanner.roadmap.service.OutlookService;
 import com.yoajung.jobplanner.roadmap.service.generator.OpenAIRequestGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
-public class OutlookServiceImpl {
+public class OutlookServiceImpl implements OutlookService {
     private final OpenAIRequestService openAIRequestService;
 
+    @Override
     public Mono<OutlookResponseDTO> requestOutlookRequest(String job) {
         OpenAIRequest outlookRequest = createOutlookRequest(job);
         return openAIRequestService.sendRequest(outlookRequest).map(response -> {
