@@ -28,7 +28,7 @@ public class JobValidationServiceImpl implements JobValidationService {
 
     private OpenAIRequest createValidationRequest(String job) {
         String userRequest = """
-                Respond whether the job %s exists. The response must be either 'yes' or 'no' only.
+                Respond whether the job %s exists. It must be human profession. The response must be either 'yes' or 'no' only.
                 """;
         return OpenAIRequestGenerator.generate(String.format(userRequest, job), "gpt/job-validation.txt");
     }
