@@ -28,33 +28,29 @@ public class SecurityConfig {
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final CorsConfigurationSource corsConfigurationSource;
 
-    private final String[] swagger = {
-            "/v3/*",
-            "/v3/api-docs/*",
-            "/swagger-ui/*",
-            "/favicon.ico"
-    };
+    private final String[] swagger = {"/v3/*", "/v3/api-docs/*", "/swagger-ui/*", "/favicon.ico"};
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
 
-        http.securityContext((context) -> context
-                        .requireExplicitSave(false))
+        http.securityContext((context) -> context.requireExplicitSave(false))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource)).csrf(AbstractHttpConfigurer::disable)
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(
+                        corsConfigurationSource)).csrf(AbstractHttpConfigurer::disable)
                 .addFilterAfter(new JwtGenerationFilter(jwtService), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtValidationFilter(jwtService), BasicAuthenticationFilter.class)
-                .authorizeHttpRequests((requests)->requests
-                        .requestMatchers("/user/sign-up", "/user/refresh").permitAll()
-                        .requestMatchers(swagger).permitAll()
-                        .requestMatchers("/user/sign-in", "/user/test", "/user/info", "/user/pass-id"
-                        , "/user/pass-info/{id}", "/oauth/sign-up", "/roadmap/whole", "/roadmap/year", "/roadmap/outlook", "/roadmap/validate").authenticated())
-                .oauth2Login(configure ->
-                        configure.authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
+                .authorizeHttpRequests(
+                        (requests) -> requests.requestMatchers("/user/sign-up", "/user/refresh").permitAll()
+                                .requestMatchers(swagger).permitAll()
+                                .requestMatchers("/user/sign-in", "/user/test", "/user/info", "/user/pass-id",
+                                        "/user/pass-info/{id}", "/oauth/sign-up").authenticated()
+                                .requestMatchers("/roadmap/whole", "/roadmap/year", "/roadmap/outlook",
+                                        "/roadmap/validate").permitAll()).oauth2Login(
+                        configure -> configure.authorizationEndpoint(
+                                        config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
                                 .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
                                 .successHandler(oAuth2AuthenticationSuccessHandler)
-                                .failureHandler(oAuth2AuthenticationFailureHandler)
-                )
-                .httpBasic(Customizer.withDefaults());
+                                .failureHandler(oAuth2AuthenticationFailureHandler)).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }
